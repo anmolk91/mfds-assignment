@@ -65,9 +65,7 @@ class TransitiveClosure:
             n = len(input_matrix)
             naiveResultList.append(self.naive_algo(input_matrix, n))
             warshallResultList.append(self.warshall_algo(input_matrix, n))
-        
-        self.plot_log_log_graph({ 'responseMatrix': naiveResultList, 'title': 'Naive algorithm Transitive closure - Execution Time vs Matrix Size. Order=n^4', 'xLabel': 'Matrix Size', 'yLabel': 'Execution Time in MiliSeconds', 'fileName': 'naive-algo' })
-        self.plot_log_log_graph({ 'responseMatrix': warshallResultList, 'title': 'Warshall’s algorithm Transitive closure - Execution Time vs Matrix Size. Order=(2*n^3 - 1)', 'xLabel': 'Matrix Size', 'yLabel': 'Execution Time in MiliSeconds', 'fileName': 'Warshall-algo' })
+        self.plot_log_log_graph({ 'naiveResultList': naiveResultList, 'warshallResultList': warshallResultList })
         self.printOutput(naiveResultList, warshallResultList)
         
     def printOutput(self, naiveResultList, warshallResultList):
@@ -105,12 +103,12 @@ class TransitiveClosure:
         """
         plt.rcParams["figure.figsize"] = (20, 8)
         plt.rcParams["savefig.format"] = 'png'
-        plt.scatter([len(x['finalMatrix']) for x in details['responseMatrix']], [y['timeTaken'] for y in details['responseMatrix']])
-        plt.title(details['title'], fontsize = 20)
-        plt.xlabel(details['xLabel'], fontsize = 12)
-        plt.ylabel(details['yLabel'], fontsize = 16)# beautify the x - labels
+        plt.title('Transitive closure - Execution Time vs Matrix Size.', fontsize = 20)
         plt.gcf().autofmt_xdate()
-        plt.savefig(fname = details['fileName'], dpi = 100)
+        plt.savefig(fname = 'algo-comparison', dpi = 100)
+        plt.plot()
+        plt.loglog([len(x['finalMatrix']) for x in details['naiveResultList']], [y['timeTaken'] for y in details['naiveResultList']])
+        plt.loglog([len(x['finalMatrix']) for x in details['warshallResultList']], [y['timeTaken'] for y in details['warshallResultList']])
         plt.show()
 
 
